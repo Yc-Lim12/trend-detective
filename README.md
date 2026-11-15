@@ -78,9 +78,13 @@ Then set `REPO_URL` at the top of `app.js` so the footer links to the repository
 - **NASA POWER** monthly API, NASA Langley Research Center: <https://power.larc.nasa.gov/>
 - Temperature, precipitation, soil wetness, evaporation, humidity, wind and ozone come from
   the **MERRA-2** reanalysis (NASA Global Modeling and Assimilation Office).
-- Sunlight, cloud cover and aerosol optical depth come from **CERES SYN1deg** and **GEWEX SRB**.
-  The two do not match where they join in 2001 (cloud cover over Kuala Lumpur jumps from about
-  75% to 85%), so sunlight and cloud cover are tested from 2001 only; aerosol starts in 2001 anyway.
+- Sunlight, cloud cover and aerosol optical depth come from **CERES SYN1deg**, from 2001.
+  NASA POWER fills the years before 2001 with GEWEX SRB, which does not match CERES where they
+  join (cloud cover over Kuala Lumpur jumps from about 75% to 85%), so the app leaves those years
+  out and does not use GEWEX SRB; aerosol starts in 2001 anyway.
+- Malaysian state outlines: **geoBoundaries** (gbOpen, MYS ADM1), from OpenStreetMap
+  (© OpenStreetMap contributors, ODbL), simplified to about 1 km. A state averages only the
+  grid cells that overlap it, each weighted by the share inside the state.
 
 Monthly values are averaged into one value per year, weighting each month by its number of days
 as NASA POWER does for its own annual values (or one chosen month per year). For a
@@ -109,10 +113,14 @@ nothing to install. Python is used to check it:
 
 ```
 pip install -r tools/requirements.txt
-python tools/validate_stats.py   # every number stats.js reports vs SciPy (315 checks)
+python tools/validate_stats.py   # every number stats.js reports vs SciPy (552 checks)
 python tools/coverage.py         # simulation: 95% interval coverage and false-alarm rates
-python tools/check_variables.py  # all 18 variables x 6 places on real NASA data, app vs independent Python
+python tools/check_variables.py  # all 18 variables x 6 places on real NASA data, app vs independent Python (216 of 216 match)
 ```
+
+The data were also cross-checked against NASA Giovanni: see `docs/verification/README.md`
+(540 months of MERRA-2 air temperature at 3.0°N, 101.25°E, median difference 0.006 °C,
+the same 1981–2025 trend).
 
 These scripts run the website's own `stats.js` (and, for `check_variables.py`, its `app.js`
 data pipeline) through Node.js, so they test the exact code the site uses. Results are in
