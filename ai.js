@@ -298,7 +298,7 @@
     var items = safeExplain(res);
     if (!items) { card.innerHTML = '<p class="ai-note">' + esc(L('I could not read the numbers for this case. Try another place or period, then ask again.')) + '</p>'; return; }
     var html = '<header class="ai-card-head"><span class="ai-card-ico">' + ICON.spark + '</span><h3>' + esc(L('In plain words')) + '</h3>' +
-      '<span class="ai-tag">' + esc(apiKey() ? 'OpenAI' : L('built-in')) + '</span></header><dl>' + items.map(function (x) {
+      '<span class="ai-tag">' + esc(L('built-in')) + '</span></header><dl>' + items.map(function (x) {
       return '<div class="ai-item ai-k-' + (x.kind || 'short') + '"><span class="ai-ico">' + (ICON[x.kind] || ICON.short) + '</span>' +
         '<div><dt>' + esc(x.title) + '</dt><dd>' + esc(x.text) + '</dd></div></div>';
     }).join('') + '</dl>';
