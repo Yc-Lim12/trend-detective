@@ -3,6 +3,8 @@
 Team **Sunway to the Moon**, NASA Space Apps Challenge 2026 (Kuala Lumpur).
 Challenge: *Be An Earth System Trend Detective!*
 
+**Try it:** https://yc-lim12.github.io/trend-detective/
+
 Pick something about Earth, pick a place, and find out from NASA data whether it is
 really changing, how fast, and whether the change is statistically significant.
 
